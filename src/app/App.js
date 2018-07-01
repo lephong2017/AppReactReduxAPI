@@ -4,12 +4,16 @@ import './App.css';
 import store from '../store/store.js';
 import {Provider} from 'react-redux';
 import Customer from './customerList.js';
+import MainA from './index.js';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div> 
         <Provider store={store}>
-          <Customer/>
+          <div>
+            <Customer/>
+            <MainA/>
+          </div>
         </Provider>
       </div>
     );
