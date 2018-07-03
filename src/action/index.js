@@ -25,9 +25,8 @@ export let fetchDev = () => {
         return axios.get(url).then(
             (response) => {
                 let devsArr = response.data
-                console.log(response.data)
-                console.log("ok")
                 dispatch(endDevSearch(devsArr))
+                console.log(devsArr)
             },
             (err) => {
                 console.log(err);

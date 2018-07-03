@@ -4,11 +4,8 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import FormDialog from '../OptionPane/Dialog.js';
 import MyButton from '../Button/btn.js';
-
 import {connect} from 'react-redux';
-
-const API = 'http://demowebaspnetcore.azurewebsites.net';
-const DEFAULT_QUERY = '/api/Customer/getAllCustomer';
+let actions = require('../../action/index')
 
 class Table extends Component {
     constructor(props) {
@@ -42,14 +39,39 @@ class Table extends Component {
                 {
                     Header: "Delete",
                     Cell: row=> (
-                      <div> <MyButton aria_label='DELETE' idBtn={this.state.datas[this.state.idbtn].id}/> </div>
+                      <div> <MyButton aria_label='DELETE' idBtn={this.state.datas[this.state.idbtn].customerId}/> </div>
                     )
                 }
             ]
             
         };
         this.onRowClick = this.onRowClick.bind(this);
+        // this.loadAllCustomer = this.loadAllCustomer.bind(this);
     };
+
+    componentWillMount(){
+        this.props.fetchDev();
+    } 
+   
+    loadAllCustomer(){
+        let {devs} = this.props
+        this.state.datas=devs.devsArray;
+        this.setState({datas: devs.devsArray});
+        console.log("state1");
+        console.log(this.state.datas);
+        console.log(devs);
+        
+        if(devs.isFetching === false && devs.devsArray.length >= 1){
+          this.setState({datas: devs.devsArray.data});
+          console.log("state2");
+          console.log(this.state.datas);
+        }
+        this.setState({datas: devs.devsArray});
+        console.log("state3");
+        console.log(this.state.datas);
+        console.log(devs);
+    }
+
     onRowClick(state, rowInfo, column, instance){
      return {
        onClick: (e, handleOriginal) => {
@@ -66,21 +88,9 @@ class Table extends Component {
      };
    };
 
-    componentDidMount() {
-      fetch(API + DEFAULT_QUERY)
-        .then(response => response.json())
-        .then( data =>{ this.setState({datas: data})}
-        );
-    // this.props.dispatch(actionCreators.loadProduct());
-    };
-
-    componentWillUpdate(){
-      fetch(API + DEFAULT_QUERY)
-        .then(response => response.json())
-        .then( data =>{ this.setState({datas: data})}
-        );
-    };
-
+    componentWillReceiveProps(){
+        this.loadAllCustomer();
+    }
 
     render() {
         return (
@@ -99,10 +109,9 @@ class Table extends Component {
     }
 }
 
-export default Table;
+// export default Table;
+export default connect(
+    (state)=>{
+        return state
+    },actions)(Table)
 
-// const mapStateToProps=(state)=>{
-//     return state
-// };
-
-// export default connect (mapStateToProps, actionCreators)(Table);
