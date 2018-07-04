@@ -10,7 +10,7 @@ class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            datas:null,
+            datas:[],
             idbtn: 0,
             col:[
                 {
@@ -50,7 +50,6 @@ class Table extends Component {
 
     componentWillMount(){
         this.props.dispatch(actions.fetchDev());
-        console.log(this.props.dispatch(actions.fetchDev()));
     } 
    
     loadAllCustomer(){
@@ -65,14 +64,6 @@ class Table extends Component {
         }
        
     }
-    componentWillReceiveProps(){
-        this.loadAllCustomer();
-        // this.setState({datas:this.props.mydata});
-        // console.log(this.props.mydata);
-    }
-
-    
-
 
     onRowClick(state, rowInfo, column, instance){
      return {
