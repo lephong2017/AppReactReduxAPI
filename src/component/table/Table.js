@@ -6,12 +6,11 @@ import FormDialog from '../OptionPane/Dialog.js';
 import MyButton from '../Button/btn.js';
 import {connect} from 'react-redux';
 let actions = require('../../action/index')
-
 class Table extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            datas: [],
+            datas:null,
             idbtn: 0,
             col:[
                 {
@@ -41,7 +40,7 @@ class Table extends Component {
                     Cell: row=> (
                       <div> <MyButton aria_label='DELETE' idBtn={this.state.datas[this.state.idbtn].customerId}/> </div>
                     )
-                }
+                } 
             ]
             
         };
@@ -50,27 +49,30 @@ class Table extends Component {
     };
 
     componentWillMount(){
-        this.props.fetchDev();
+        this.props.dispatch(actions.fetchDev());
+        console.log(this.props.dispatch(actions.fetchDev()));
     } 
    
     loadAllCustomer(){
         let {devs} = this.props
-        this.state.datas=devs.devsArray;
+        // this.state.datas=devs.devsArray;
         this.setState({datas: devs.devsArray});
-        console.log("state1");
-        console.log(this.state.datas);
         console.log(devs);
-        
-        if(devs.isFetching === false && devs.devsArray.length >= 1){
-          this.setState({datas: devs.devsArray.data});
+        if(devs.isFetching == false && devs.devsArray.length >= 1){
+          this.setState({datas: devs.devsArray});
           console.log("state2");
           console.log(this.state.datas);
         }
-        this.setState({datas: devs.devsArray});
-        console.log("state3");
-        console.log(this.state.datas);
-        console.log(devs);
+       
     }
+    componentWillReceiveProps(){
+        this.loadAllCustomer();
+        // this.setState({datas:this.props.mydata});
+        // console.log(this.props.mydata);
+    }
+
+    
+
 
     onRowClick(state, rowInfo, column, instance){
      return {
@@ -87,11 +89,7 @@ class Table extends Component {
        }
      };
    };
-
-    componentWillReceiveProps(){
-        this.loadAllCustomer();
-    }
-
+ 
     render() {
         return (
             <div >
@@ -107,11 +105,16 @@ class Table extends Component {
             </div>
         );
     }
+    
 }
 
-// export default Table;
-export default connect(
-    (state)=>{
-        return state
-    },actions)(Table)
+const mapStateToProps = state => ({
+    state: state
+  });
+  
+export default connect(mapStateToProps)(Table);
+// export default connect(
+//     (state)=>{
+//         return state
+//     },actions)(Table)
 

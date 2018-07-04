@@ -23,10 +23,10 @@ export let fetchDev = () => {
     return (dispatch) => {
         dispatch(startDevSearch())
         return axios.get(url).then(
-            (response) => {
+            (response)   => {
                 let devsArr = response.data
                 dispatch(endDevSearch(devsArr))
-                console.log(devsArr)
+                // console.log(devsArr)
             },
             (err) => {
                 console.log(err);
@@ -35,3 +35,4 @@ export let fetchDev = () => {
 
     }
 }
+

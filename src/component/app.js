@@ -1,44 +1,53 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import Node from '../component/Demo/Node.js';
+import axios from 'axios';
 let actions = require('../action/index')
+var abc=[];
 export  class App extends Component {
+  constructor(props){
+    super(props)
+    this.state= {
+      datas: []
+    };
+    // this.saveObject = this.saveObject.bind(this);
+    this.changeState= this.changeState.bind(this);
+  }
+
+  
   componentWillMount(){
     this.props.fetchDev();
   } 
-
-  renderDev(dev){
-    return (
-      <div className="dev-card">
-     <h4 className="dev-title">  <a href={dev.html_url} target="_blank"> {dev.login}</a></h4>
-  </div> 
-    )
-
+  componentDidMount(){
+    const self = this;
+    axios.get(response);
+    self.setState({ datas: response.data });
+    
   }
+
+  saveObject(e){
+    abc.push(e);
+  }
+  changeState(){
+    this.setState({datas:abc.customerId});
+    console.log(this.state.datas);
+  }
+
   render() {
-    let {devs} = this.props
-    if(devs.isFetching === true){
-      return <p>Loading</p>
-    }
-    else if(devs.isFetching === false && devs.devsArray.length >= 1){
-      return(
-        <div>
-          <div className="dev-list">
-            {
-              devs.devsArray.map((e,i) =>
-                <Node key={i}>{e.customerName} </Node>
-              )
-            }
-          </div>
-    </div>
+    {console.log(this.state.datas)}
+    return(
+      <div>
+        {/* {
+          this.state.datas.map((e,i)=>{
+            <p key={i}>e.customerId</p>
+          })
+        } */}
+        abcd
+      </div>
     )
-    }
-    else{
-      return(
-      <p>I dont know oooo</p>
-      )
-    }
   }
+
+
 }
 
 
