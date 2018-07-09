@@ -1,58 +1,67 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
-import Node from '../component/Demo/Node.js';
-import axios from 'axios';
 let actions = require('../action/index')
 var abc=[];
 export  class App extends Component {
   constructor(props){
     super(props)
-    this.state= {
-      datas: []
-    };
-    // this.saveObject = this.saveObject.bind(this);
-    this.changeState= this.changeState.bind(this);
+    this.state={
+      data:abc
+    }
+    this.check =this.check.bind(this);
   }
 
-  
   componentWillMount(){
     this.props.fetchDev();
-  } 
-  componentDidMount(){
-    const self = this;
-    axios.get(response);
-    self.setState({ datas: response.data });
-    
   }
 
-  saveObject(e){
-    abc.push(e);
+  check(){
+    if(abc.length >1){
+      this.setState({data:abc});
+      console.log("start");
+      console.log(this.state.data);
+      console.log("end");
+    }
   }
-  changeState(){
-    this.setState({datas:abc.customerId});
-    console.log(this.state.datas);
+  
+
+  renderDev(dev){
+    return (
+      <div className="dev-card">
+        <h4 className="dev-title" key={dev.customerId}>  <p >{dev.customerName}</p></h4>
+	    </div> 
+    )
+
   }
 
   render() {
-    {console.log(this.state.datas)}
-    return(
-      <div>
-        {/* {
-          this.state.datas.map((e,i)=>{
-            <p key={i}>e.customerId</p>
-          })
-        } */}
-        abcd
-      </div>
+    let {devs} = this.props
+    if(devs.isFetching === true){
+      return <p>Loading</p>
+    }
+    else if(devs.isFetching === false && devs.devsArray.length >= 1){
+        abc=devs.devsArray;
+        console.log(abc);
+      return(
+        <div>
+			<div className="dev-list">
+        { devs.devsArray.map(this.renderDev)}
+			</div>
+		</div>
     )
+    }
+    else{
+      return(
+      <p>I dont know oooo</p>
+      )
+    }
   }
-
-
+  
 }
 
 
 
   export default connect(
     (state)=>{
-        return state
+        return state;
     },actions)(App)

@@ -26,7 +26,6 @@ export let fetchDev = () => {
             (response)   => {
                 let devsArr = response.data
                 dispatch(endDevSearch(devsArr))
-                // console.log(devsArr)
             },
             (err) => {
                 console.log(err);
