@@ -3,6 +3,8 @@ import './ProductListPage.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ReactTable from 'react-table';
+
+import matchSorter from 'match-sorter';
 import 'react-table/react-table.css';
 import FormDialog from './../../components/OptionPane/Dialog.js';
 import MyButton from './../../components/Button/btn.js';
@@ -12,42 +14,64 @@ class ProductListPage extends Component {
         super(props)
         this.state ={
             datas:[],
-            productId: 0,
+            indexRow: 0,
             col:[
                 {
                     Header: "ID",
-                    accessor: "productId"
+                    // accessor: "productId",
+                    id: "productId",
+                    accessor: d => d.productId,
+                    filterMethod: (filter, rows) =>
+                      matchSorter(rows, filter.value, { keys: ["productId"] }),
+                    filterAll: true
                 },
                 {
                     Header: "Name",
-                    accessor: "productName"
+                    // accessor: "productName",
+                    id: "productName",
+                    accessor: d => d.productName,
+                    filterMethod: (filter, rows) =>
+                      matchSorter(rows, filter.value, { keys: ["productName"] }),
+                    filterAll: true
                 },
                 {
                     Header: "Category",
-                    accessor: "productCategoryCode"
+                    // accessor: "productCategoryCode",
+                    id: "productCategoryCode",
+                    accessor: d => d.productCategoryCode,
+                    filterMethod: (filter, rows) =>
+                      matchSorter(rows, filter.value, { keys: ["productCategoryCode"] }),
+                    filterAll: true
                 },
                 {
                     Header: "Detail",
-                    accessor: "otherProductDetails"
+                    // accessor: "otherProductDetails",
+                    id: "otherProductDetails",
+                    accessor: d => d.otherProductDetails,
+                    filterMethod: (filter, rows) =>
+                      matchSorter(rows, filter.value, { keys: ["otherProductDetails"] }),
+                    filterAll: true
                 },
                 {
                     Header: "Edit",
+                    filterable:false,
                     Cell: row => (
-                      <div> <MyButton aria_label='EDIT' productId = {this.state.datas[this.state.productId]}/></div>
+                      <div> <MyButton aria_label='EDIT' product = {this.state.datas[this.state.indexRow]}/></div>
                      )
                 },
                 {
                     Header: "Delete",
+                    filterable:false,
                     Cell: row=> (
                       <div> 
-                          <MyButton aria_label='DELETE' productId = {this.state.datas[this.state.productId]} /> 
+                          <MyButton aria_label='DELETE' product = {this.state.datas[this.state.indexRow]} /> 
                       </div>
                     )
                 } 
             ]
             
         };
-        this.onRowClick = this.onRowClick.bind(this);
+        // this.onRowClick = this.onRowClick.bind(this);
         this.changeState = this.changeState.bind(this);
     }
     componentWillMount(){
@@ -63,14 +87,14 @@ class ProductListPage extends Component {
     }
     
     
-    onRowClick(state, rowInfo, column, instance){
-        console.log(this.state.productId);
+    onRowClick = (state, rowInfo, column, instance)=>{
+        console.log(this.state.indexRow);
         return {
           onClick: (e, handleOriginal) => {
             var idex=rowInfo.index;
             this.changeState();
             if(idex!=="undefined"){
-              this.setState({productId:rowInfo.index});
+              this.setState({indexRow:rowInfo.index});
             }
             // console.log(this.state.productId);
             if (handleOriginal){
@@ -97,6 +121,9 @@ class ProductListPage extends Component {
                         </ProductList> */}
                         <FormDialog typeDialog='ADD' titleDialog="Add product" contentText="Complete data field to insert object!!!"/>
                         <ReactTable data={products}
+                            filterable
+                            defaultFilterMethod={(filter, row) =>
+                                String(row[filter.id]) === filter.value}
                             getTdProps={this.onRowClick.bind(this)}
                             columns={this.state.col}
                             defaultPageSize={5}

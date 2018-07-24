@@ -13,11 +13,20 @@ const products = (state = initialState, action) => {
         case Types.FILTER_PRODUCT:
             return [...action.products];
         case Types.ADD_PRODUCT:
+            console.log(state);
             state.push(product);
+            console.log("start add state product.js");
+            console.log(state);
+            console.log("end add state product.js");
             return [...state];
         case Types.UPDATE_PRODUCT:
             index = findIndex(state, product.productId);
+            console.log("index list of product: "+index)
+            console.log(state);
             state[index] = product;
+            console.log("start edit state product.js");
+            console.log(state);
+            console.log("end edit state product.js");
             return [...state];
         case Types.DELETE_PRODUCT:
             index = findIndex(state, id);

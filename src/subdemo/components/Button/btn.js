@@ -26,7 +26,7 @@ class MyButton extends Component{
   }
   onDelete = (id) => { 
     var {onDeleteProduct} = this.props;
-    id = this.props.productId;
+    id = this.props.product;
     console.dir("id button "+id.productId);
     if(id!==undefined){
       id=id.productId;
@@ -51,7 +51,7 @@ class MyButton extends Component{
     });
 }
   render(){
-    var { productId} = this.props;
+    var { product} = this.props;
     if(this.props.aria_label==='ADD') {
       return (
         <div>
@@ -62,10 +62,10 @@ class MyButton extends Component{
       );
     }
     if(this.props.aria_label==='EDIT'){
-      if(productId!==undefined){
+      if(product!==undefined){
         return (
           <div>
-            <Link to={`/product/${productId.productId}/edit`} >
+            <Link to={`/product/${product.productId}/edit`} >
               <Button size="small" variant="fab" color="primary" aria-label={this.props.aria_label} className={this.state.propsDemo.button}>
                 <EditIcon>edit_icon</EditIcon>
               </Button>

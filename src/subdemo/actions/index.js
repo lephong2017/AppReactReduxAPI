@@ -69,9 +69,9 @@ export const actAddProduct = (product) => {
 export const actUpdateProductRequest = (product) => {
     return (dispatch) => {
         return callApi_S(`Product/editProduct/id?id=${product.productId}`, 'PUT', product).then(res => {
-            if (res) {
-                dispatch(actUpdateProduct(res.data));
-            }
+            // if (res) {
+                dispatch(actUpdateProduct(product));
+            // }
         });
     }
 }
@@ -86,8 +86,8 @@ export const actUpdateProduct = (product) => {
 export const actDeleteProductRequest = (id) => {
     return (dispatch) => {
         return callApi_S(`Product/deleteProduct?id=${id}`, 'DELETE', null).then(res => {
-            // dispatch(actDeleteProduct(id));
-            console.dir(res);
+            dispatch(actDeleteProduct(id));
+            // console.dir(res);
         });
     }
 };
