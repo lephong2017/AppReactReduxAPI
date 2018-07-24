@@ -1,5 +1,6 @@
 import * as Types from './../constants/ActionType';
 import callApi from './../utils/apiCaller';
+import callApi_S from './../utils/apiCallerS';
 import * as Config from './../constants/Config';
 import Axios from 'axios';
 // import axios from 'axios';
@@ -11,14 +12,14 @@ export const actFetchProductsRequest = () => {
             dispatch(actFetchProducts(res.data));
         });
     }
-}
+};
 
 export const actFetchProducts = (products) => {
     return {
         type: Types.FETCH_PRODUCTS,
         products
     }
-}
+};
 
 export const searchProductRequest = (keywork) => {
     return (dispatch) => {
@@ -26,14 +27,14 @@ export const searchProductRequest = (keywork) => {
             dispatch(searchProduct(res.data));
         })
     }
-}
+};
 
 export const searchProduct = (products) => {
     return {
         type: Types.SEARCH_PRODUCTS,
         products
     }
-}
+};
 
 export const filterProductRequest = (value) => {
     return (dispatch) => {
@@ -52,9 +53,9 @@ export const filterProduct = (products) => {
 
 export const actAddProductRequest = (product) => {
     return (dispatch) => {
-        return callApi('Product/createProduct', 'POST', product).then(res => {
-            dispatch(actAddProduct(res.data));
-        });
+        return callApi_S('Product/createProduct', 'POST', product).then(res => {
+            dispatch(actAddProduct(product));
+        }).catch(error => console.error(`Fetch Error =\n`, error));;
     }
 }
 
@@ -67,7 +68,7 @@ export const actAddProduct = (product) => {
 
 export const actUpdateProductRequest = (product) => {
     return (dispatch) => {
-        return callApi(`Product/editProduct/${product.id}`, 'PUT', product).then(res => {
+        return callApi_S(`Product/editProduct/id?id=${product.productId}`, 'PUT', product).then(res => {
             if (res) {
                 dispatch(actUpdateProduct(res.data));
             }
@@ -84,11 +85,12 @@ export const actUpdateProduct = (product) => {
 
 export const actDeleteProductRequest = (id) => {
     return (dispatch) => {
-        return callApi(`Product/deleteProduct/${id}`, 'DELETE', null).then(res => {
-            dispatch(actDeleteProduct(id));
+        return callApi_S(`Product/deleteProduct?id=${id}`, 'DELETE', null).then(res => {
+            // dispatch(actDeleteProduct(id));
+            console.dir(res);
         });
     }
-}
+};
 
 export const actDeleteProduct = (id) => {
     return {
@@ -99,7 +101,7 @@ export const actDeleteProduct = (id) => {
 
 export const actGetProductRequest = (id) => {
     return dispatch => {
-        return callApi(`Product/getFindIDProduct/${id}`, 'GET', null).then(res => {
+        return callApi(`Product/getFindIDProduct/id?id=${id}`, 'GET', null).then(res => {
             dispatch(actGetProduct(res.data))
         });
     }

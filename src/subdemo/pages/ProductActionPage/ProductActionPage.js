@@ -78,13 +78,13 @@ class ProductActionPage extends Component {
                                 <input onChange={this.onChange} value={txtName} name="txtName" type="text" className="form-control" />
                             </div>
                             <div className="form-group">
-                                <label>Mô Tả Sản Phẩm: </label>
-                                <textarea onChange={this.onChange} value={txtCategory} name="txtDescription" className="form-control" rows="3">
-                                </textarea>
+                                <label>Loại sản phẩm: </label>
+                                <input onChange={this.onChange} value={txtCategory} name="txtCategory" className="form-control" rows="3">
+                                </input>
                             </div>
                             <div className="form-group">
-                                <label>Giá: </label>
-                                <input onChange={this.onChange} value={txtDetail} name="txtPrice" type="number" className="form-control" />
+                                <label>Chi tiết: </label>
+                                <input onChange={this.onChange} value={txtDetail} name="txtDetail" type="text" className="form-control" />
                             </div>
                            
                             <Link to="/product-list" className="btn btn-danger mr-5">

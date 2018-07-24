@@ -57,13 +57,14 @@ class ProductListPage extends Component {
 
     changeState() {
         var { products } = this.props;
-        console.log(products);
+        // console.log(products);
         this.setState({datas:products});
-        console.log(this.state.datas);
+        // console.log(this.state.datas);
     }
     
     
     onRowClick(state, rowInfo, column, instance){
+        console.log(this.state.productId);
         return {
           onClick: (e, handleOriginal) => {
             var idex=rowInfo.index;

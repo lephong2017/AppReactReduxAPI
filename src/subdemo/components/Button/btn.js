@@ -27,6 +27,7 @@ class MyButton extends Component{
   onDelete = (id) => { 
     var {onDeleteProduct} = this.props;
     id = this.props.productId;
+    console.dir("id button "+id.productId);
     if(id!==undefined){
       id=id.productId;
     }
