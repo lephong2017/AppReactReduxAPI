@@ -8,7 +8,10 @@ import matchSorter from 'match-sorter';
 import 'react-table/react-table.css';
 import FormDialog from './../../components/OptionPane/Dialog.js';
 import MyButton from './../../components/Button/btn.js';
+// import MyDropdownList from './../../components/DropdownList/my-dropdown-list.js';
+import MyDropdownList from './../../components/DropdownList/MyDropdownBT.js';
 import { actFetchProductsRequest, actDeleteProductRequest, searchProductRequest } from '../../actions/index';
+import {actFetchCategoryProductRequest} from '../../actions/cates.js';
 class ProductListPage extends Component {
     constructor(props){
         super(props)
@@ -107,8 +110,8 @@ class ProductListPage extends Component {
 
     render() {
 
-        var { products } = this.props;
-
+        var { products,categorys } = this.props;
+        console.log(categorys);
         return (
             <div className="container">
                 <div className="row">
@@ -119,7 +122,8 @@ class ProductListPage extends Component {
                         {/* <ProductList>
                             {this.showProducts(products)} 
                         </ProductList> */}
-                        <FormDialog typeDialog='ADD' titleDialog="Add product" contentText="Complete data field to insert object!!!"/>
+                        {/* <FormDialog typeDialog='ADD' titleDialog="Add product" contentText="Complete data field to insert object!!!"/> */}
+                        <MyDropdownList title="Primary" id="1" listCate={categorys}/>
                         <ReactTable data={products}
                             filterable
                             defaultFilterMethod={(filter, row) =>
@@ -135,21 +139,12 @@ class ProductListPage extends Component {
         );
     }
 
-    // showProducts(products) {
-    //     var result = null;
-    //     var { onDeleteProduct } = this.props;
-    //     if (products!==undefined && products.length > 0) {
-    //         result = products.map((product, index) => {
-    //             return <ProductItem product={product} key={index} index={index} onDeleteProduct={onDeleteProduct} />
-    //         });
-    //     }
-    //     return result;
-    // }
 }
 const mapStateToProps = state => {
     
     return {
-        products: state.products
+        products: state.products,
+        categorys: state.category
     }
 }
 
@@ -157,6 +152,9 @@ const mapDispatchToProps = (dispatch, props) => {
     return {
         fetchAllProducts: () => {
             dispatch(actFetchProductsRequest());
+        },
+        fetchAllCateTgoryProduct:()=>{
+            dispatch(actFetchCategoryProductRequest());
         },
         onDeleteProduct: (id) => {
             dispatch(actDeleteProductRequest(id));
