@@ -24,7 +24,7 @@ class MyDropdownList extends Component{
                         title={this.props.title}
                         key={this.props.id}
                         bsSize="small"
-                        style={{ maxHeight: "158px" }}
+                        style={{ maxHeight: "58px" }}
                         id={`dropdown-basic-${this.props.id}`}
                         onSelect={this.handleSelectValueOption}
 
