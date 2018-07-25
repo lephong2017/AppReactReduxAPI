@@ -6,7 +6,7 @@ import ReactTable from 'react-table';
 
 import matchSorter from 'match-sorter';
 import 'react-table/react-table.css';
-import FormDialog from './../../components/OptionPane/Dialog.js';
+// import FormDialog from './../../components/OptionPane/Dialog.js';
 import MyButton from './../../components/Button/btn.js';
 // import MyDropdownList from './../../components/DropdownList/my-dropdown-list.js';
 import MyDropdownList from './../../components/DropdownList/MyDropdownBT.js';
@@ -72,7 +72,7 @@ class ProductListPage extends Component {
                     )
                 } 
             ]
-            
+             
         };
         // this.onRowClick = this.onRowClick.bind(this);
         this.changeState = this.changeState.bind(this);
@@ -80,6 +80,7 @@ class ProductListPage extends Component {
     componentWillMount(){
         // Gọi trước khi component đc render lần đầu tiên 
         this.props.fetchAllProducts();
+        this.props.fetchAllCategoryProduct();
     }
 
     changeState() {
@@ -111,7 +112,6 @@ class ProductListPage extends Component {
     render() {
 
         var { products,categorys } = this.props;
-        console.log(categorys);
         return (
             <div className="container">
                 <div className="row">
@@ -123,7 +123,7 @@ class ProductListPage extends Component {
                             {this.showProducts(products)} 
                         </ProductList> */}
                         {/* <FormDialog typeDialog='ADD' titleDialog="Add product" contentText="Complete data field to insert object!!!"/> */}
-                        <MyDropdownList title="Primary" id="1" listCate={categorys}/>
+                        <MyDropdownList cateButton="Primary" title="Category" id="1" listCate={categorys}/>
                         <ReactTable data={products}
                             filterable
                             defaultFilterMethod={(filter, row) =>
@@ -144,7 +144,8 @@ const mapStateToProps = state => {
     
     return {
         products: state.products,
-        categorys: state.category
+        categorys: state.categorys
+
     }
 }
 
@@ -153,7 +154,7 @@ const mapDispatchToProps = (dispatch, props) => {
         fetchAllProducts: () => {
             dispatch(actFetchProductsRequest());
         },
-        fetchAllCateTgoryProduct:()=>{
+        fetchAllCategoryProduct:()=>{
             dispatch(actFetchCategoryProductRequest());
         },
         onDeleteProduct: (id) => {

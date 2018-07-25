@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+// import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 // import Icon from '@material-ui/core/Icon';
@@ -11,11 +11,11 @@ import swal from 'sweetalert';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actFetchProductsRequest, actDeleteProductRequest, searchProductRequest } from '../../actions/index';
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit
-  }
-});
+// const styles = theme => ({
+//   button: {
+//     margin: theme.spacing.unit
+//   }
+// });
 
 class MyButton extends Component{
   constructor(props){

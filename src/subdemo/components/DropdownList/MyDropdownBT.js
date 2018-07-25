@@ -1,12 +1,18 @@
-import {DropdownButton,MenuItem,ButtonToolbar} from 'react-bootstrap';
+import {DropdownButton,MenuItem} from 'react-bootstrap';
 import React, { Component } from 'react';
 import '../lib-css/dropdown-btn.css';
-export default class MyDropdownList extends Component{
+import { connect } from 'react-redux';
+import { actGetProductRequestByCateID } from '../../actions/index';
+
+class MyDropdownList extends Component{
     constructor(props){
         super(props)
-        this.state={
+        this.handleSelectValueOption = this.handleSelectValueOption.bind(this);
+    }
 
-        }
+    handleSelectValueOption(cateId){
+        console.log(cateId+" is category click");
+        this.props.onGetProductByCateId(cateId);
     }
 
     render(){
@@ -14,16 +20,20 @@ export default class MyDropdownList extends Component{
         return(
             <div>
                     <DropdownButton
-                        bsStyle={this.props.title.toLowerCase()}
+                        bsStyle={this.props.cateButton.toLowerCase()}
                         title={this.props.title}
                         key={this.props.id}
                         bsSize="small"
-                        style={{ maxHeight: "58px" }}
+                        style={{ maxHeight: "158px" }}
                         id={`dropdown-basic-${this.props.id}`}
+                        onSelect={this.handleSelectValueOption}
+
                         >
                         {
                             listCate.map(function(obj,index){
-                                <MenuItem eventKey={index}>{obj.productCategoryCode}</MenuItem>
+                               return( <MenuItem eventKey={obj.productCategoryCode} key={index} >
+                                    {obj.productCategoryDescription}
+                                </MenuItem>)
                             })
                         }
                         
@@ -31,6 +41,15 @@ export default class MyDropdownList extends Component{
             </div>
         );
     }
-    
-
 }
+
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onGetProductByCateId : (id) => {
+            dispatch(actGetProductRequestByCateID(id));
+        }
+    }
+} 
+
+export default connect(null,mapDispatchToProps)(MyDropdownList);

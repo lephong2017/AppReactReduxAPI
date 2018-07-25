@@ -32,9 +32,16 @@ const products = (state = initialState, action) => {
             index = findIndex(state, id);
             state.splice(index, 1);
             return [...state];
+        case Types.FIND_PRODUCT_BY_CATEID:
+            var arrPositionProductByCateID = findIndexCate(action.product,id);
+            var arrProductByCate=[];
+            arrPositionProductByCateID.forEach((posProduct,index)=>{
+                arrProductByCate[index]=action.product[posProduct];
+            });
+            return arrProductByCate;
         default: return [...state];
-    }
-};
+        }
+    };
 
 var findIndex = (products, id) => {
     var result = -1;
@@ -46,4 +53,16 @@ var findIndex = (products, id) => {
     return result;
 }
 
+var findIndexCate = (products, id) => {
+    var result = [];
+    products.forEach((product, index) => {
+        if (product.productCategoryCode === id) {
+            result.push(index);
+        }
+    });
+    return result;
+}
 export default products;
+
+
+

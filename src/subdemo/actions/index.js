@@ -3,7 +3,6 @@ import callApi from './../utils/apiCaller';
 import callApi_S from './../utils/apiCallerS';
 import * as Config from './../constants/Config';
 import Axios from 'axios';
-// import axios from 'axios';
 
 export const actFetchProductsRequest = () => {
     return (dispatch) => {
@@ -111,5 +110,21 @@ export const actGetProduct = (product) => {
     return {
         type : Types.EDIT_PRODUCT,
         product
+    }
+}
+
+export const actGetProductRequestByCateID = (id) => {
+    return dispatch => {
+        return callApi(`Product/getAllProduct`, 'GET', null).then(res => {
+            dispatch(actGetProductByCateId(res.data,id))
+        });
+    }
+}
+
+export const actGetProductByCateId = (product,id) => {
+    return {
+        type : Types.FIND_PRODUCT_BY_CATEID,
+        product,
+        id
     }
 }
