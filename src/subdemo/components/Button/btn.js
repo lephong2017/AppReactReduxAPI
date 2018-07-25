@@ -25,12 +25,8 @@ class MyButton extends Component{
     }
   }
   onDelete = (id) => { 
-    var {onDeleteProduct} = this.props;
-    id = this.props.product;
-    console.dir("id button "+id.productId);
-    if(id!==undefined){
-      id=id.productId;
-    }
+    var {onDeleteProduct,productId} = this.props;
+    console.log(productId);
     swal({
         title: "Are you sure?",
         text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -40,7 +36,7 @@ class MyButton extends Component{
     })
     .then((willDelete) => {
         if (willDelete) {
-            onDeleteProduct(id);
+            onDeleteProduct(productId);
             
             swal("Poof! Your imaginary file has been deleted!", {
                 icon: "success",
@@ -51,7 +47,7 @@ class MyButton extends Component{
     });
 }
   render(){
-    var { product} = this.props;
+    var { productId} = this.props;
     if(this.props.aria_label==='ADD') {
       return (
         <div>
@@ -62,14 +58,14 @@ class MyButton extends Component{
       );
     }
     if(this.props.aria_label==='EDIT'){
-      if(product!==undefined){
+      if(productId!==undefined){
         return (
           <div>
-            <Link to={`/product/${product.productId}/edit`} >
+            <Link to={`/product/${productId}/edit`} >
               <Button size="small" variant="fab" color="primary" aria-label={this.props.aria_label} className={this.state.propsDemo.button}>
                 <EditIcon>edit_icon</EditIcon>
               </Button>
-            </Link>
+            </Link> 
           </div>
         );
       }else return (
@@ -82,7 +78,7 @@ class MyButton extends Component{
     if(this.props.aria_label==='DELETE'){
       return (
         <div>
-          <Button  size="small" onClick={this.onDelete.bind(this)} variant="fab" color="primary" aria-label={this.props.aria_label} className={this.state.propsDemo.button}>
+          <Button  size="small" onClick={this.onDelete} variant="fab" color="primary" aria-label={this.props.aria_label} className={this.state.propsDemo.button}>
              <DeleteIcon/>
           </Button>
         </div>
